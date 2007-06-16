@@ -31,27 +31,33 @@ Eclipse Compiler for Java.
 %patch0 -p1
 
 %build
-unset CLASSPATH || :
 export JAVA_HOME=%{java_home}
 
 ant -f compilejdtcorewithjavac.xml
+
+CLASSPATH=${PWD}/ecj.jar; export CLASSPATH
+
 ant -lib ecj.jar -f compilejdtcore.xml compile
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_desktopdir},%{_bindir},%{_libdir}/%{name}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_javadir}}
+
+cat << 'EOF' > $RPM_BUILD_ROOT%{_bindir}/ecj
+#!/bin/sh
+. %{_javadir}-utils/java-functions
+set_javacmd
+
+CLASSPATH=%{_javadir}/ecj.jar${CLASSPATH:+:}$CLASSPATH \
+java org.eclipse.jdt.internal.compiler.batch.Main "$@"
+EOF
+
+install ecj.jar $RPM_BUILD_ROOT%{_javadir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/eclipse
-%attr(755,root,root) %{_libdir}/%{name}/eclipse
-%attr(755,root,root) %{_libdir}/%{name}/lib*.so
-%{_desktopdir}/eclipse.desktop
-%{_pixmapsdir}/eclipse-icon.xpm
-%dir %{_libdir}/%{name}
-%{_libdir}/%{name}/.eclipseproduct
-%{_libdir}/%{name}/configuration
-%{_libdir}/%{name}/eclipse.ini
+%attr(755,root,root) %{_bindir}/ecj
+%{_javadir}/*.jar
