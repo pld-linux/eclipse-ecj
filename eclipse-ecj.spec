@@ -1,10 +1,11 @@
 Summary:	Eclipse Compiler for Java
+Summary(pl.UTF-8):	Kompilator Eclipse dla Javy
 Name:		eclipse-ecj
 Version:	3.2.2
 Release:	0.1
 License:	EPL v1.0
 Group:		Development/Tools
-Source0:	http://distro.ibiblio.org:/pub/linux/distributions/gentoo/distfiles/eclipse-ecj-3.2.2.tar.bz2
+Source0:	http://distro.ibiblio.org:/pub/linux/distributions/gentoo/distfiles/%{name}-%{version}.tar.bz2
 # Source0-md5:	21f55de66c2deec51b6714b607b6793f
 Patch0:		%{name}-gentoo.patch
 URL:		http://www.eclipse.org/
@@ -25,6 +26,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Eclipse Compiler for Java.
+
+%description -l pl.UTF-8
+Kompilator Eclipse dla Javy.
 
 %prep
 %setup -q
