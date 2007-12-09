@@ -1,3 +1,4 @@
+%include	/usr/lib/rpm/macros.java
 Summary:	Eclipse Compiler for Java
 Summary(pl.UTF-8):	Kompilator Eclipse dla Javy
 Name:		eclipse-ecj
@@ -11,6 +12,7 @@ Patch0:		%{name}-gentoo.patch
 URL:		http://www.eclipse.org/
 BuildRequires:	ant >= 1.6.1
 BuildRequires:	jdk >= 1.4
+BuildRequires:	jpackage-utils
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.300
@@ -18,6 +20,7 @@ BuildRequires:	unzip
 BuildRequires:	zip
 Requires:	ant
 Requires:	jdk >= 1.4
+Requires:	jpackage-utils
 ExclusiveArch:	i586 i686 pentium3 pentium4 athlon %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,13 +38,10 @@ Kompilator Eclipse dla Javy.
 %patch0 -p1
 
 %build
-export JAVA_HOME=%{java_home}
+%ant -f compilejdtcorewithjavac.xml
 
-ant -f compilejdtcorewithjavac.xml
-
-CLASSPATH=${PWD}/ecj.jar; export CLASSPATH
-
-ant -lib ecj.jar -f compilejdtcore.xml compile
+export CLASSPATH=$PWD/ecj.jar
+%ant -lib ecj.jar -f compilejdtcore.xml compile
 
 %install
 rm -rf $RPM_BUILD_ROOT
