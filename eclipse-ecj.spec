@@ -14,7 +14,7 @@ BuildRequires:	ant >= 1.6.1
 BuildRequires:	jdk >= 1.4
 BuildRequires:	jpackage-utils
 BuildRequires:	pkgconfig
-BuildRequires:	rpm-pythonprov
+BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 BuildRequires:	unzip
 BuildRequires:	zip
