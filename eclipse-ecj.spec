@@ -9,6 +9,7 @@ Group:		Development/Tools
 Source0:	http://distro.ibiblio.org/pub/linux/distributions/gentoo/distfiles/%{name}-%{version}.tar.bz2
 # Source0-md5:	21f55de66c2deec51b6714b607b6793f
 Patch0:		%{name}-gentoo.patch
+Patch1:		%{name}-gccmain.patch
 URL:		http://www.eclipse.org/
 BuildRequires:	ant >= 1.6.1
 BuildRequires:	jdk >= 1.4
@@ -36,6 +37,7 @@ Kompilator Eclipse dla Javy.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 %ant -f compilejdtcorewithjavac.xml
